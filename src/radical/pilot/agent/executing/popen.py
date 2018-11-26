@@ -121,36 +121,35 @@ class Popen(AgentExecutingComponent) :
         # Get the environment of the agent
         new_env = copy.deepcopy(os.environ)
 
-        #
-        # Mimic what virtualenv's "deactivate" would do
-        #
-        old_path = new_env.pop('_OLD_VIRTUAL_PATH', None)
-        if old_path:
-            new_env['PATH'] = old_path
-
-        old_ppath = new_env.pop('_OLD_VIRTUAL_PYTHONPATH', None)
-        if old_ppath:
-            new_env['PYTHONPATH'] = old_ppath
-
-        old_home = new_env.pop('_OLD_VIRTUAL_PYTHONHOME', None)
-        if old_home:
-            new_env['PYTHON_HOME'] = old_home
-
-        old_ps = new_env.pop('_OLD_VIRTUAL_PS1', None)
-        if old_ps:
-            new_env['PS1'] = old_ps
-
-        new_env.pop('VIRTUAL_ENV', None)
-
-        # Remove the configured set of environment variables from the
-        # environment that we pass to Popen.
-        for e in new_env.keys():
-            env_removables = list()
-            if self._mpi_launcher : env_removables += self._mpi_launcher.env_removables
-            if self._task_launcher: env_removables += self._task_launcher.env_removables
-            for r in  env_removables:
-                if e.startswith(r):
-                    new_env.pop(e, None)
+      # # Mimic what virtualenv's "deactivate" would do
+      # #
+      # old_path = new_env.pop('_OLD_VIRTUAL_PATH', None)
+      # if old_path:
+      #     new_env['PATH'] = old_path
+      #
+      # old_ppath = new_env.pop('_OLD_VIRTUAL_PYTHONPATH', None)
+      # if old_ppath:
+      #     new_env['PYTHONPATH'] = old_ppath
+      #
+      # old_home = new_env.pop('_OLD_VIRTUAL_PYTHONHOME', None)
+      # if old_home:
+      #     new_env['PYTHON_HOME'] = old_home
+      #
+      # old_ps = new_env.pop('_OLD_VIRTUAL_PS1', None)
+      # if old_ps:
+      #     new_env['PS1'] = old_ps
+      #
+      # new_env.pop('VIRTUAL_ENV', None)
+      #
+      # # Remove the configured set of environment variables from the
+      # # environment that we pass to Popen.
+      # for e in new_env.keys():
+      #     env_removables = list()
+      #     if self._mpi_launcher : env_removables += self._mpi_launcher.env_removables
+      #     if self._task_launcher: env_removables += self._task_launcher.env_removables
+      #     for r in  env_removables:
+      #         if e.startswith(r):
+      #             new_env.pop(e, None)
 
         return new_env
 
